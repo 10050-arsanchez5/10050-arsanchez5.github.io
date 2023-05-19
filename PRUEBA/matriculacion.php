@@ -14,62 +14,27 @@
 		require_once("class/class.matricula.php");
 		
 		$cn = conectar();
-		$v = new matricula($cn);
+		$mt = new matricula($cn);
 		//vehiculo::MetodoEstatico();
 		
 		
-//2.1 URL para la petición GET
-//$URL = "http://localhost:8088/Vehiculo_CRUD/Vehiculo_PARTE_II/index.php?d=act/0";	
-//$URL = "http://localhost:8088/Vehiculo_CRUD/Vehiculo_PARTE_II/index.php?d=act/5";	
-
-//$URL = "http://localhost/DESARROLLO_WEB/I_PARCIAL/Conexion_%20BD_PHP/Vehiculo_PARTE_II/index.php?d=act/5";	
-
-//$URL = "http://localhost:8088/Vehiculo_CRUD/Vehiculo_PARTE_II/index.php?d=det/0";	
-//$URL = "http://localhost:8088/Vehiculo_CRUD/Vehiculo_PARTE_II/index.php?d=det/5";		
-		
     // Codigo necesario para realizar pruebas.
 		if(isset($_GET['d'])){
-		  /*
-			echo "<br>PETICION GET <br>";
-			echo "<pre>";
-				print_r($_GET);
-			echo "</pre>";
-		  */
-			// 2.1 PETICION GET
-			// $dato = $_GET['d'];
-			
-			// 2.2 DETALLE id
 			$dato = base64_decode($_GET['d']);
 			$tmp = explode("/", $dato);
-			
-			/*
-			echo "<br>VARIABLE TEMP <br>";
-			echo "<pre>";
-				print_r($tmp);
-			echo "</pre>";
-			*/
 			$op = $tmp[0];
 			$id = $tmp[1];
 			
-			if($op == "matr"){
-				echo $v->get_detail_vehiculo($id);
-			}
-			
-        }else{
-			   /*
-				echo "<br>PETICION POST <br>";
-				echo "<pre>";
-					print_r($_POST);
-				echo "</pre>";
-		      */
-			if(isset($_POST['Guardar']) && $_POST['op']=="new"){
-				$v->save_vehiculo();
-			}elseif(isset($_POST['Guardar']) && $_POST['op']=="update"){
-				$v->update_vehiculo();
-			}elseif(isset($_POST['Registrar']) && $_POST['op']=="matricula"){
-				$v->matricula_vehiculo();
+			if($op == "matri"){
+				echo $mt->get_form($id);
+            }
+		}else{
+		
+			if(isset($_POST['Guardar_Matricula']) && $_POST['op']=="matricular"){
+				$mt->save_matricula();
 			}else{
-				echo $v->get_list();
+				echo $mt->get_list_matricula();
+				echo $mt->get_list_matriculados();
 			}	
 		}
 		
